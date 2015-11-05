@@ -1,0 +1,55 @@
+#header {
+  background-color: aliceblue;
+}
+.command {
+  background-color: burlywood;
+  
+}
+
+html, body {
+  width: 90%
+}
+
+#content {
+  float: left;
+  width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+#tasklist {
+  float: left;
+  width: 70%;
+  max-width: 550px;
+  box-shadow: 2px 2px 2px 2px;
+  background-color: #FFFFCC;
+}
+
+#tasklisttable {
+  width: 80%;
+  margin-left: 10%;
+  padding-bottom: 50px;
+  padding-top: 30px;
+}
+
+.tasklisttddone, .tasklisttdsubject {
+  border-bottom: 1px;
+  border-bottom-color: black;
+  border-bottom-style: solid;
+  border-bottom-width: 80%;
+  font-family: 'Short Stack', cursive;
+}
+
+.tasklisttrcontent {
+  height: 25px;
+}
+
+.tasklisttddone {
+  text-align: center;
+}
+
+#tasklistthsubject, #tasklistthdone {
+  border-bottom-style: double;
+  font-family: 'Short Stack', cursive;
+  text-align: left;
+}
