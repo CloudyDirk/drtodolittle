@@ -1,0 +1,9 @@
+Manifest-Version: 2
+DynamicImport-Package: *
+Bundle-Version: 1.0.0
+Bundle-ManifestVersion: 2
+Import-Package: org.apache.camel.component.servlet,org.apache.camel.co
+ mponent.servlet.osgi,org.ops4j.pax.web.extender.whiteboard,org.ops4j.
+ pax.web.extender.whiteboard.runtime,org.osgi.service.http
+Bundle-SymbolicName: drtodolittle-rest-api
+
