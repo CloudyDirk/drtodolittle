@@ -37,6 +37,18 @@
     <camelContext xmlns="http://camel.apache.org/schema/blueprint">
 		<restConfiguration bindingMode="json" component="servlet" contextPath="/rest-api" port="8181"/>	  
 
+		<rest path="/task">
+			<get uri="/{id}" produces="application/json">
+				<to uri="direct:gettask" />
+			</get>
+		</rest>
+
+		<rest path="/tasks">
+			<get uri="/" produces="application/json">
+				<to uri="direct:gettasks" />
+			</get>
+		</rest>
+		
 		<rest path="/say">
 		<get uri="/hello">
 		  <to uri="direct:hello"/>
@@ -48,6 +60,17 @@
 		  <to uri="mock:update"/>
 		</post>
 	  </rest>
+	  
+	  <route>
+		<from uri="direct:gettask" />
+		<to uri="velocity:templates/gettask.vm" />
+	  </route>
+	  
+	  <route>
+		<from uri="direct:gettasks" />
+		<to uri="velocity:templates/gettasks.vm" />
+	  </route>
+
 	  <route>
 		<from uri="direct:hello"/>
 		<transform>
