@@ -35,31 +35,26 @@
 
  
     <camelContext xmlns="http://camel.apache.org/schema/blueprint">
-		<restConfiguration bindingMode="json" component="servlet" contextPath="/rest-api" port="8181"/>	  
-
-		<rest path="/task">
-			<get uri="/{id}" produces="application/json">
-				<to uri="direct:gettask" />
-			</get>
-		</rest>
+		<restConfiguration bindingMode="off" component="servlet" contextPath="/rest-api" port="8181" enableCORS="true"/>	  
 
 		<rest path="/tasks">
 			<get uri="/" produces="application/json">
 				<to uri="direct:gettasks" />
 			</get>
+			<post uri="/" produces="application/json">
+				<to uri="direct:createtask" />
+			</post>
+			<get uri="/{id}" produces="application/json">
+				<to uri="direct:gettask" />
+			</get>
+			<delete uri="/{id}">
+				<to uri="direct:deletetask" />
+			</delete>
+			<put uri="/{id}" produces="application/json">
+				<to uri="direct:updatetask" />
+			</put>
 		</rest>
-		
-		<rest path="/say">
-		<get uri="/hello">
-		  <to uri="direct:hello"/>
-		</get>
-		<get consumes="application/json" uri="/bye">
-		  <to uri="direct:bye"/>
-		</get>
-		<post uri="/bye">
-		  <to uri="mock:update"/>
-		</post>
-	  </rest>
+
 	  
 	  <route>
 		<from uri="direct:gettask" />
@@ -72,18 +67,20 @@
 	  </route>
 
 	  <route>
-		<from uri="direct:hello"/>
-		<transform>
-		  <constant>Hello World</constant>
-		</transform>
+		<from uri="direct:deletetask" />
+		<setHeader headerName="Exchange.HTTP_RESPONSE_CODE"><constant>204</constant></setHeader>
+		<to uri="mock:templates/deletetask" />
 	  </route>
+	  
 	  <route>
-		<from uri="direct:bye"/>
-		<transform>
-		  <constant>Bye World</constant>
-		</transform>
+		<from uri="direct:updatetask" />
+		<to uri="velocity:templates/updatetask.vm" />
 	  </route>
-		
+	  
+	  <route>
+		<from uri="direct:createtask" />
+		<to uri="velocity:templates/createtask.vm" />
+	  </route>
     </camelContext>
  
 </blueprint>
