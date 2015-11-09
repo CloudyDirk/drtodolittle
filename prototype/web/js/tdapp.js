@@ -30,6 +30,10 @@ tdapp.factory("Fact",function(){
 		
 	var todos = [];
 	
+	function _addTodoObj(obj){
+		todos.unshift(obj);
+	}
+	
 	function _addTodo(todotxt){
 		var tmp_ts = Date.now();
 		var tmp_tshr = fkts_tsHr(tmp_ts); 
@@ -43,9 +47,8 @@ tdapp.factory("Fact",function(){
 		//todos.push(obj);
 	}
 
-	_addTodo("blablabla");
-	_addTodo("umtaumtaumta");
-	todos[1].done = 1;
+	_addTodo("Immer schön speichern!");
+	todos[0].done = 1;
 	
 	function _delTodo(item){
 		var idx = todos.indexOf(item)
@@ -72,6 +75,7 @@ tdapp.factory("Fact",function(){
 					
 	return{
 		addTodo : _addTodo,
+		addTodoObj : _addTodoObj,
 		getTodos : _getTodos,
 		delTodo : _delTodo,
 		togDoneTodo : _togDoneTodo,
@@ -85,12 +89,12 @@ tdapp.factory("Fact",function(){
   Main controller ----------------------------------------
 
 */
-tdapp.controller("MainCtrl",function($scope,$timeout,Fact){
+tdapp.controller("MainCtrl",function($scope,$timeout,$http,Fact){
 
 	$scope.todos = Fact.getTodos();
 	$scope.s_list = 1;
 	$scope.s_add = 0;
-
+  
 	$scope.mainKeydown=function(e){
 		var k = e.keyCode;
 		if(k==107){//+ on numpad
@@ -154,5 +158,28 @@ tdapp.controller("MainCtrl",function($scope,$timeout,Fact){
 			ta.focus();
 		},128);
 	}
-	
+
+	//get todos from server
+	$scope.gettodosfromserver=function(){
+		$http({
+		  url: "http://www.drtodolittle.de:8181/rest-api/tasks/"
+		}).then(
+			function successCallback(response) {
+				response.data.forEach(function(o){
+					var nobj = {
+						ts:0,
+						tshr:o.id,
+						txt:o.subject,
+						done:o.completed					
+					}
+					Fact.addTodoObj(nobj);
+				});
+			}
+			,
+			function errorCallback(response) {
+				var e = JSON.stringify(response);
+				alert("error:"+e);
+			}
+		);
+	}
 });

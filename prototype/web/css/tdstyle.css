@@ -23,6 +23,10 @@ body{
 	font-family:arial;
 	font-size:10px;
 }
+.fnt12{
+	font-family:arial;
+	font-size:12px;
+}
 .fnt16{
 	font-family:arial;
 	font-size:16px;
@@ -45,7 +49,7 @@ body{
 	position:fixed;
 	right:0px;
 	top:0px;
-	padding:8px;
+	padding:4px;
 }
 .info{
 	position:fixed;
