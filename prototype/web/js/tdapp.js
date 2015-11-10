@@ -6,9 +6,7 @@
 var tdapp=angular.module("tdapp",[]);
 
 /*
-
   Help functions ----------------------------------------
-
 */
 function fkts_tsHr(x){
 	var ts = new Date(x);
@@ -22,13 +20,40 @@ function fkts_tsHr(x){
 }
 
 /*
-
   Factory ----------------------------------------
-
 */
 tdapp.factory("Fact",function(){		
-		
+
+	// Logging
+
+	var log = [];
+	
+	function _log(logtxt){
+		log.push(logtxt);
+		if(log.length>32){
+			log.shift();
+		}
+	}
+
+	function _getLog(){
+		return log;
+	}
+	
+	for(i=0;i<32;i++){
+		_log("");
+	}
+	
+	// Todos
+	
 	var todos = [];
+
+	function _getTodos(){
+		return todos;
+	}
+	
+	function _setTodos(todolist){
+		todos=todolist;
+	}
 	
 	function _addTodoObj(obj){
 		todos.unshift(obj);
@@ -44,12 +69,8 @@ tdapp.factory("Fact",function(){
 			done:0
 		};
 		todos.unshift(obj);
-		//todos.push(obj);
 	}
 
-	_addTodo("Immer schön speichern!");
-	todos[0].done = 1;
-	
 	function _delTodo(item){
 		var idx = todos.indexOf(item)
 		todos.splice(idx,1);		
@@ -65,15 +86,14 @@ tdapp.factory("Fact",function(){
 		}
 	}
 
-	function _getTodos(){
-		return todos;
-	}
+	_addTodo("Immer schön speichern!");
+	todos[0].done = 1;
+
+	// Returns
 	
-	function _setTodos(todolist){
-		todos=todolist;
-	}
-					
 	return{
+		log : _log,
+		getLog : _getLog,
 		addTodo : _addTodo,
 		addTodoObj : _addTodoObj,
 		getTodos : _getTodos,
@@ -85,32 +105,36 @@ tdapp.factory("Fact",function(){
 });
 
 /*
-
   Main controller ----------------------------------------
-
 */
 tdapp.controller("MainCtrl",function($scope,$timeout,$http,Fact){
 
+	// init
+
 	$scope.todos = Fact.getTodos();
-	$scope.s_login = 0;
-	$scope.s_list = 1;
+	$scope.log = Fact.getLog();
+
+	$scope.s_login = 1;
+	$scope.s_list = 0;
 	$scope.s_add = 0;
-  
+
+	// keyboard functions
+	
 	$scope.mainKeydown=function(e){
 		if($scope.s_login==0){
 			var k = e.keyCode;
 			if(k==107){//+ on numpad
 				e.preventDefault();
 				$scope.s_add = 1;
-				//set focus to textarea
 				$timeout(function(){
-					document.getElementById("txta").focus();
-				},128);			
+					document.getElementById("todotxta").focus();
+				},128);
+				Fact.log("NewTodo-Dialog.");				
 			}	
 		}
 	}	
 
-	$scope.taKeydown=function(e,newtodotxt){
+	$scope.newtodoKeydown=function(e,newtodotxt){
 		var k = e.keyCode;
 		if(k==13){//ret
 			e.preventDefault();
@@ -119,55 +143,67 @@ tdapp.controller("MainCtrl",function($scope,$timeout,$http,Fact){
 			$scope.s_add = 0;
 			$scope.s_list = 1;
 			window.scrollTo(0,0);
+			Fact.log("Todo added.");
 		} else 
 		if(k==27){//esc
 			e.preventDefault();			
 			$scope.newtodotxt = "";
 			$scope.s_add = 0;
-			$scope.s_list = 1;			
+			$scope.s_list = 1;
+			Fact.log("Todo not added.");
+		} else
+		if(k==9){//tab
+			e.preventDefault();
 		}
 	}
 
-	$scope.tdKeydown=function(e,id){
+	$scope.todolineKeydown=function(e,id){
 		var k=e.keyCode;
 		if(k==13 || k==27 || k==107){//ret,esc,+
 			e.preventDefault();
-			document.getElementById("todotxt"+id).blur();
+			document.getElementById("todoid"+id).blur();
+			Fact.log("Todo unfocused.");
 		}
 	}
 
-	$scope.sel=function(id){
-		document.getElementById("todotxt"+id).focus();
+	// todo functions
+	
+	$scope.seltodoline=function(id){
+		document.getElementById("todoid"+id).focus();
+		Fact.log("Todo focused.");
 	}	
 	
-	$scope.del=function(item){
+	$scope.deltodo=function(item){
 		Fact.delTodo(item);
+		Fact.log("ToDo deleted.");
 		if(Fact.getTodos().length==0){
-			$scope.s_list = 0;			
+			Fact.log("Todo-List is empty.");			
 		}
 	}
 
 	$scope.togDone=function(item){
 		Fact.togDoneTodo(item);
-		if(Fact.getTodos().length==0){
-			$scope.s_list = 0;			
-		}
+		Fact.log("Todo-Flag changed.");
 	}
-	
+
 	$scope.newtodo=function(){
 		$scope.s_add = 1;
 		$timeout(function(){
-			var ta=document.getElementById("txta");
+			var ta=document.getElementById("todotxta");
 			ta.focus();
 		},128);
+		Fact.log("New Todo-Dialog.");
 	}
-
-	//get todos from server
-	$scope.gettodosfromserver=function(){
+	
+	$scope.gettodos=function(){
+		Fact.log("Getting data from server...");
 		$http({
-		  url: "http://www.drtodolittle.de:8181/rest-api/tasks/"
+			method:"get",
+			url: "http://www.drtodolittle.de:8181/rest-api/tasks"
 		}).then(
 			function successCallback(response) {
+				Fact.log("Done.");
+				Fact.log("Updateing Todo-List.");
 				response.data.forEach(function(o){
 					var nobj = {
 						ts:0,
@@ -177,12 +213,32 @@ tdapp.controller("MainCtrl",function($scope,$timeout,$http,Fact){
 					}
 					Fact.addTodoObj(nobj);
 				});
+				Fact.log("Done.");
 			}
 			,
 			function errorCallback(response) {
-				var e = JSON.stringify(response);
-				alert("error:"+e);
+				Fact.log("Error!");
+				Fact.log("Check browser console for details.");				
+				console.log(JSON.stringify(response));
 			}
 		);
 	}
+		
+	// login functions
+		
+	$scope.dologin=function(){
+		$scope.s_login=0;
+		$scope.s_list=1;
+		Fact.log("Logged in.");
+	}
+	
+	$scope.dologout=function(){
+		$scope.s_login=1;
+		$scope.s_list=0;
+		$scope.s_add=0;
+		Fact.log("Logged out.");
+	}
+
+	Fact.log("Client Log-System ready.");
+	
 });

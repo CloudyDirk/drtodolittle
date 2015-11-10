@@ -3,21 +3,13 @@
 	tdstyle.css
 
 */
-
-/*
-
-  Main ----------------------------------------
-
-*/
-body{
+body,div,p,span{
 	padding:0px;
 	margin:0px;
 }
 
 /*
-  
   Fonts ----------------------------------------
-
 */
 .fnt10{
 	font-family:arial;
@@ -41,25 +33,43 @@ body{
 }
 
 /*
-  
-  Misc ----------------------------------------
-
+  Margins ----------------------------------------
 */
+.mt8{
+	margin-top:8px;
+}
+.mb8{
+	margin-bottom:8px;
+}
+.tal{
+	text-align:left;
+}
+.tar{
+	text-align:right;
+}
+
+/*  
+  Misc ----------------------------------------
+*/
+.header{
+	padding:32px;
+}
 .fkts{
 	position:fixed;
 	right:0px;
 	top:0px;
 	padding:4px;
 }
-.info{
+.log{
 	position:fixed;
 	left:0px;
 	bottom:0px;
 	padding:8px;
 }
-.header{
-	padding:32px;
-}
+
+/*
+  Login ----------------------------------------
+*/
 .login{
 	width:320px;
 	background-color:#aaaaaa;
@@ -67,24 +77,37 @@ body{
 	margin-top:32px;
 	//text-align:left;
 	box-shadow: 4px 4px 8px grey;
+	border:solid 1px;
 }
 .liuser{
-	width:16em;
 	background-color:#dddddd;
+	resize:none;
+	width:16em;
+	height:18px;
 	padding:4px;
 	margin:4px;
 }
 .lipass{
+	background-color:#dddddd;
+	resize:none;
 	width:16em;
+	height:18px;
 	padding:4px;
 	margin:4px;
+}
+.libut{
+	width:16em;
+	background-color:#888888;
+	padding:6px;
+	margin:4px;
+}
+.libut:hover{
+	cursor:pointer;
 	background-color:#dddddd;
 }
 
 /*
-  
   ToDoElements ----------------------------------------
-
 */
 .todotab{
 	background-color:#ffffff;
@@ -107,18 +130,21 @@ body{
 }
 .newtodo{
 	position:fixed;
-	text-align:left;
-	top:0px;
-	right:0px;
-	padding:32px;
+	width:50%;
+	left:25%;
+	top:32px;
+	//text-align:left;
+	padding:16px;
 	background-color:#aaaaaa;
 	box-shadow: 4px 4px 8px grey;
+	border:solid 1px;
 }
-.ta{
+.todota{
+	position:relative;
 	background-color:#dddddd;
 	resize:none;
-	width:32em;
-	height:9em;
+	width:90%;
+	height:64px;
 	padding:4px;
 }
 .mo:hover{
