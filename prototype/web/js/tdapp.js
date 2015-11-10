@@ -92,19 +92,22 @@ tdapp.factory("Fact",function(){
 tdapp.controller("MainCtrl",function($scope,$timeout,$http,Fact){
 
 	$scope.todos = Fact.getTodos();
+	$scope.s_login = 0;
 	$scope.s_list = 1;
 	$scope.s_add = 0;
   
 	$scope.mainKeydown=function(e){
-		var k = e.keyCode;
-		if(k==107){//+ on numpad
-			e.preventDefault();
-			$scope.s_add = 1;
-			//set focus to textarea
-			$timeout(function(){
-				document.getElementById("txta").focus();
-			},128);			
-		}	
+		if($scope.s_login==0){
+			var k = e.keyCode;
+			if(k==107){//+ on numpad
+				e.preventDefault();
+				$scope.s_add = 1;
+				//set focus to textarea
+				$timeout(function(){
+					document.getElementById("txta").focus();
+				},128);			
+			}	
+		}
 	}	
 
 	$scope.taKeydown=function(e,newtodotxt){

@@ -17,18 +17,26 @@
 
 <body ng-app="tdapp" ng-controller="MainCtrl" ng-keydown="mainKeydown($event);">
 
+<!-- login -->
+<center>
+<div ng-show="s_login==1" class="login fnt16">
+		<input type="text" name="liusername" value="username" class="liuser fnt16"></input>
+		<input type="password" name="lipass" value="password" class="lipass fnt16"></input>
+</div>
+</center>
+
 <!-- functions -->
-<div class="fkts">
+<div ng-show="s_list==1" class="fkts">
 <span class="mo fnt12" ng-click="gettodosfromserver();">GET TODOS FROM SERVER</span> | 
 <span class="mo fnt12" ng-click="newtodo();">ADD</span>
 </div>
 
 <!-- infos -->
-<div class="fnt10 info">Press + on your numpad<br>to add a ToDo!</div>
+<div ng-show="s_list==1" class="fnt10 info">Press + on your numpad<br>to add a ToDo!</div>
 
 <!-- header -->
 <center>
-<div id="header" class="fnt48 header">ToDoS</div>
+<div ng-show="s_list==1" id="header" class="fnt48 header">ToDoS</div>
 </center>
 
 <!-- add -->
@@ -70,7 +78,7 @@
 
 <!-- footer -->
 <center>
-<div>&nbsp</div>
+<div ng-show="s_list==1">&nbsp</div>
 </center>
 
 </body>
