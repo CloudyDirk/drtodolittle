@@ -38,6 +38,9 @@ body,div,p,span{
 .mt8{
 	margin-top:8px;
 }
+.mt16{
+	margin-top:16px;
+}
 .mb8{
 	margin-bottom:8px;
 }
@@ -60,11 +63,52 @@ body,div,p,span{
 	top:0px;
 	padding:4px;
 }
+.molink:hover{
+	cursor:pointer;
+	border-bottom:solid 1px;
+}
 .log{
 	position:fixed;
 	left:0px;
 	bottom:0px;
 	padding:8px;
+}
+.working{
+	position:fixed;
+	left:25%;
+	top:32px;	
+	width:50%;
+	background-color:#aaaaaa;
+	padding:32px;
+	border:solid 1px;
+	box-shadow: 4px 4px 8px grey;
+}
+.search{
+	background: url(../images/magnifying-glass-2x.png) no-repeat 240px 6px;
+	width: 256px;
+	padding: 4px;
+	margin-bottom:40px;
+	border:solid 1px;
+	border-color: #aaaaaa;
+}
+
+/*
+  Error ----------------------------------------
+*/
+@keyframes flash{  
+	0% {color:white;}
+	50% {color:red;}
+	100% {color:white;}
+}
+@-webkit-keyframes flash{
+	0% {color:white;}
+	50% {color:red;}
+	100% {color:white;}
+}
+.flash{
+	-webkit-animation: flash 1s linear infinite;
+	-moz-animation: flash 1s linear infinite;
+	animation: flash 1s linear infinite;
 }
 
 /*
