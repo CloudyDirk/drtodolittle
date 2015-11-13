@@ -154,6 +154,9 @@ tdapp.controller("MainCtrl",function($scope,$timeout,$interval,$http,Fact){
 					$scope.s_list=1;
 					$scope.s_working=0;
 				},1000);
+				$timeout(function(){
+					document.getElementById("searchf").focus();
+				},1128);
 			}
 			,
 			function(response) {
@@ -281,6 +284,14 @@ tdapp.controller("MainCtrl",function($scope,$timeout,$interval,$http,Fact){
 		}
 	}
 
+	$scope.loginKeydown=function(e){
+		var k=e.keyCode;
+		if(k==13){//ret
+			e.preventDefault();
+			$scope.dologin();
+		}
+	}
+	
 	// Todo-Functions
 	
 	$scope.seltodoline=function(id){
@@ -339,13 +350,13 @@ tdapp.controller("MainCtrl",function($scope,$timeout,$interval,$http,Fact){
 	$scope.dologout=logout;
 
 	function login(){
-		if($scope.liusername=="gast"){
+		if($scope.liusername=="gast" && md5($scope.lipass)=="d4061b1486fe2da19dd578e8d970f7eb"){
 			Fact.log("Logged in.");		
 			$scope.errormsg="";
 			$scope.s_login=0;
 			$scope.gettodos();
 		} else {
-			$scope.errormsg="Username/Password error!";
+			$scope.errormsg="Username/Password-Error!";
 			$scope.dologout();
 		}
 	}
@@ -354,6 +365,8 @@ tdapp.controller("MainCtrl",function($scope,$timeout,$interval,$http,Fact){
 	// Init
 	
 	Fact.log("Client Log-System ready.");
+	
+	document.getElementById("liusername").focus();
 	
 	if($scope.s_list==1){
 		$scope.gettodos();

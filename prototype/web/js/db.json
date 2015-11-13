@@ -1,4 +1,11 @@
 {
+  "users": [
+    {
+      "id": 1,
+      "username": "gast",
+      "userpass": "d4061b1486fe2da19dd578e8d970f7eb"
+    }
+  ],
   "tasks": [
     {
       "subject": "Was!",
@@ -37,13 +44,23 @@
     },
     {
       "id": 29,
-      "subject": "Und nun...",
+      "subject": "Und nun?",
       "completed": true
     },
     {
       "id": 30,
       "subject": "Die Nr. 30",
       "completed": false
+    },
+    {
+      "subject": "Pnfff!",
+      "completed": false,
+      "id": 31
+    },
+    {
+      "subject": "Mmmm?!",
+      "completed": false,
+      "id": 32
     }
   ]
 }

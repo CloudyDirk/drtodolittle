@@ -3,8 +3,9 @@
 
 <head>
 	<title>drtodolittle web prototype</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"></meta>
 	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.js"></script>
+	<script src="js/md5.js"></script>
 	<script src="js/tdapp.js"></script>
 	<link rel="stylesheet" media="all" type="text/css" href="css/tdstyle.css" />
 </head>
@@ -16,12 +17,12 @@
 <div ng-show="s_login==1" class="login fnt16">
 		<div class="fnt32">DrToDoLittle</div>
 		<div>&nbsp;</div>
-		<input type="text" ng-model="liusername" name="liusername" placeholder="username" class="liuser fnt16"></input>
-		<input type="password" ng-model="lipass" name="lipass" placeholder="password" class="lipass fnt16"></input>
-		<div class="libut fnt16" ng-click="dologin()">Login</div>
+		<input id="liusername" type="text" ng-model="liusername" name="liusername" placeholder="username" class="liuser fnt16" ng-keydown="loginKeydown($event);" tabindex=1></input>
+		<input type="password" ng-model="lipass" name="lipass" placeholder="password" class="lipass fnt16" ng-keydown="loginKeydown($event);" tabindex=2></input>
+		<div class="libut fnt16" ng-click="dologin();" tabindex=3 ng-keydown="loginKeydown($event);">Login</div>
 		<div>&nbsp;</div>
 		<div class="fnt12">or</div>
-		<div class="libut fnt16">Login via Twitter</div>
+		<div class="libut fnt16" tabindex=4>Login via Twitter</div>
 		<div>&nbsp;</div>
 		<div class="flash">{{errormsg}}</div>
 </div>
@@ -43,8 +44,8 @@
 <!-- header/search -->
 <center>
 <div ng-show="s_list==1" id="header" class="fnt32 header">ToDoS</div>
-<div ng-show="s_list==1" id="search">
-		<input type="text" ng-model="search" name="search" placeholder="search" class="search fnt16"></input>
+<div ng-show="s_list==1">
+		<input id="searchf" type="text" ng-model="search" name="search" placeholder="search" class="search fnt16" taborder=1></input>
 </div>
 </center>
 
@@ -74,7 +75,7 @@
 			<td class="fnt16 todoline" id="todoline{{todo.id}}" ng-click="seltodoline(todo.id);">
 				<span class="fnt10">ID:{{todo.id}}</span>
 				<br>
-				<span contenteditable="true" ng-keydown="todolineKeydown($event,todo.id);" id="todoid{{todo.id}}">{{todo.subject}}</span>
+				<span contenteditable="true" ng-keydown="todolineKeydown($event,todo.id);" id="todoid{{todo.id}}" tabindex=-1>{{todo.subject}}</span>
 			</td>
 			<td class="todofkts">
 				<span class="mo" ng-click="togCompleted(todo);">
