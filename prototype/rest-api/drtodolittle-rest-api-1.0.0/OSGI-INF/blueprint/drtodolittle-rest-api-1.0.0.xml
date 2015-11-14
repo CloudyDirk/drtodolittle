@@ -8,34 +8,18 @@
     <property name="httpService" ref="httpService"/>
     <property name="servlet" ref="camelServlet"/>
   </bean>
-
-	
-	<!-- Default Resource Mapping -->
-	<service id="defaultResourceService" interface="org.ops4j.pax.web.extender.whiteboard.ResourceMapping">
-		<bean class="org.ops4j.pax.web.extender.whiteboard.runtime.DefaultResourceMapping">
-			<property name="alias" value="/"/>
-			<property name="path" value=""/>
-		</bean>	
-	</service>
-  
-  <service id="welcomeFileService" interface="org.ops4j.pax.web.extender.whiteboard.WelcomeFileMapping">
-	  <bean class="org.ops4j.pax.web.extender.whiteboard.runtime.DefaultWelcomeFileMapping">
-			<property name="redirect" value="true"/>
-			<property name="welcomeFiles">
-			  <array>
-				<value>index.html</value>
-				<value>welcome.html</value>
-			  </array>
-			</property>
-		</bean>
-	</service>
- 
   
   <bean class="org.apache.camel.component.servlet.CamelHttpTransportServlet" id="camelServlet"/>
 
  
     <camelContext xmlns="http://camel.apache.org/schema/blueprint">
-		<restConfiguration bindingMode="off" component="servlet" contextPath="/rest-api" port="8181" enableCORS="true"/>	  
+		<restConfiguration bindingMode="off" component="servlet" contextPath="/rest-api" enableCORS="true"/>	  
+
+		<rest path="/ping">
+			<get uri="/" >
+				<to uri="direct:ping" />
+			</get>
+		</rest>
 
 		<rest path="/tasks">
 			<get uri="/" produces="application/json">
@@ -55,6 +39,12 @@
 			</put>
 		</rest>
 
+	  <route>
+		<from uri="direct:ping" />
+		<transform>
+			<constant>Hello, I'm Dr ToDo Little</constant>
+		</transform>
+	  </route>
 	  
 	  <route>
 		<from uri="direct:gettask" />

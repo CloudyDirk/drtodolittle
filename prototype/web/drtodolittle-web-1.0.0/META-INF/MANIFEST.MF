@@ -1,0 +1,7 @@
+Manifest-Version: 2
+Bundle-Version: 1.0.0
+Bundle-ManifestVersion: 2
+Import-Package: org.ops4j.pax.web.extender.whiteboard,org.ops4j.pax.web.
+ extender.whiteboard.runtime
+Bundle-SymbolicName: drtodolittle-web
+

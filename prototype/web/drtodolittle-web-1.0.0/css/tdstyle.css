@@ -1,0 +1,101 @@
+/*
+
+	tdstyle.css
+
+*/
+
+/*
+
+  Main ----------------------------------------
+
+*/
+body{
+	padding:0px;
+	margin:0px;
+}
+
+/*
+  
+  Fonts ----------------------------------------
+
+*/
+.fnt10{
+	font-family:arial;
+	font-size:10px;
+}
+.fnt16{
+	font-family:arial;
+	font-size:16px;
+}
+.fnt32{
+	font-family:arial;
+	font-size:32px;
+}
+.fnt48{
+	font-family:arial;
+	font-size:48px;
+}
+
+/*
+  
+  Misc ----------------------------------------
+
+*/
+.fkts{
+	position:fixed;
+	right:0px;
+	top:0px;
+	padding:8px;
+}
+.info{
+	position:fixed;
+	left:0px;
+	bottom:0px;
+	padding:8px;
+}
+.header{
+	padding:32px;
+}
+
+/*
+  
+  ToDoElements ----------------------------------------
+
+*/
+.todotab{
+	background-color:#ffffff;
+	border-spacing: 8px;
+}
+.todoline{
+	border-radius: 15px;
+	background-color:#ffff88;
+	width:480px;
+	padding:16px;
+	box-shadow: 4px 4px 8px grey;
+}
+.todoline:hover{
+	background-color:#ffffbb;
+	border:solid 0px;
+	cursor:pointer;
+}
+.todofkts{
+	vertical-align:top;
+}
+.newtodo{
+	position:fixed;
+	text-align:left;
+	top:0px;
+	right:0px;
+	padding:32px;
+	background-color:#aaaaaa;
+	box-shadow: 4px 4px 8px grey;
+}
+.ta{
+	background-color:#dddddd;
+	resize:none;
+	width:32em;
+	height:9em;
+}
+.mo:hover{
+	cursor:pointer;
+}

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+
+		<title>drtodolittle web prototype</title>
+
+		<meta charset="utf-8">
+
+		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.js"></script>
+
+		<script src="js/tdapp.js"></script>
+
+		<link rel="stylesheet" media="all" type="text/css" href="css/tdstyle.css" />
+
+	</head>
+
+<body ng-app="tdapp" ng-controller="MainCtrl" ng-keydown="mainKeydown($event);">
+
+<!-- functions -->
+<div class="fkts">
+<span class="mo fnt16" ng-click="newtodo();">ADD</span>
+</div>
+
+<!-- infos -->
+<div class="fnt10 info">Press + on your numpad<br>to add a ToDo!</div>
+
+<!-- header -->
+<center>
+<div id="header" class="fnt48 header">ToDoS</div>
+</center>
+
+<!-- add -->
+<center>
+<div ng-show="s_add==1" class="newtodo">
+	<div class="fnt16">
+	NewToDo
+	</div>
+	<div>
+	<textarea id="txta" ng-model="newtodotxt" ng-keydown="taKeydown($event,newtodotxt);" class="ta fnt16"></textarea>
+	</div>
+	<div class="fnt16">
+	Press "Return" to save or "Esc" to cancel!
+	</div>
+</div>
+</center>
+
+<!-- list -->
+<center>
+<div ng-show="s_list==1">
+	<table class="todotab">
+		<tr ng-repeat="todo in todos">
+			<td class="fnt16 todoline" id="todoline{{$index}}" ng-click="sel($index);">
+				<span class="fnt10">{{todo.tshr}}</span>
+				<br>
+				<span contenteditable="true" ng-keydown="tdKeydown($event,$index);" id="todotxt{{$index}}">{{todo.txt}}</span>
+			</td>
+			<td class="todofkts">
+				<span class="mo" ng-click="togDone(todo);">
+					<span ng-if="todo.done==0"><img src="images/checkbox_unchecked.png"/></span>
+					<span ng-if="todo.done==1"><img src="images/checkbox.png"/></span>				
+				</span>
+				<span class="mo" ng-click="del(todo);"><img src="images/del.png"/></span>
+			</td>
+		</tr>
+	</table>
+</div>
+</center>
+
+<!-- footer -->
+<center>
+<div>&nbsp</div>
+</center>
+
+</body>
+
+</html>
