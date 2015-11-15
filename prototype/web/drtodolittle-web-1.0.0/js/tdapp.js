@@ -123,8 +123,10 @@ tdapp.controller("MainCtrl",function($scope,$timeout,$interval,$http,Fact){
 
 	// communication with server
 	
-	var server = "http://localhost:3000/tasks";
-
+	//var server = "http://localhost:3000/tasks";
+	var server = "http://www.drtodolittle.de/rest-api/tasks";
+	
+	
 	function errorCallback(response) {
 		Fact.log("Error!");
 		Fact.log("Check browser console for details.");				
