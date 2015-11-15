@@ -3,8 +3,18 @@
 	tdapp.js
 
 */
-var tdapp=angular.module("tdapp",[]);
+var tdapp=angular.module("tdapp",["satellizer"]);
 
+tdapp.config(function($authProvider){
+	$authProvider.twitter({
+		url: 'http://127.0.0.1:3000/auth/twitter',
+		authorizationEndpoint: 'https://api.twitter.com/oauth/authenticate',
+		redirectUri: window.location.origin,
+		type: '1.0',
+		popupOptions: { width: 495, height: 645 }
+	});	
+});
+	
 /*
   Help functions ----------------------------------------
 */
@@ -109,7 +119,7 @@ tdapp.factory("Fact",function(){
 /*
   Main controller ----------------------------------------
 */
-tdapp.controller("MainCtrl",function($scope,$timeout,$interval,$http,Fact){
+tdapp.controller("MainCtrl",function($scope,$timeout,$interval,$http,$auth,Fact){
 
 	// init
 
@@ -125,7 +135,6 @@ tdapp.controller("MainCtrl",function($scope,$timeout,$interval,$http,Fact){
 	
 	//var server = "http://localhost:3000/tasks";
 	var server = "http://www.drtodolittle.de/rest-api/tasks";
-	
 	
 	function errorCallback(response) {
 		Fact.log("Error!");
@@ -220,7 +229,13 @@ tdapp.controller("MainCtrl",function($scope,$timeout,$interval,$http,Fact){
 			errorCallback
 		);
 	}	
-		
+
+	// Satellizer
+	
+	$scope.authenticate = function(provider) {
+		$auth.authenticate(provider);
+	};
+	
 	// Keyboard functions
 
 	$scope.mainKeydown=function(e){

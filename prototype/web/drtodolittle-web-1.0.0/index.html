@@ -5,6 +5,7 @@
 	<title>drtodolittle web prototype</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"></meta>
 	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.js"></script>
+	<script src="js/satellizer.js"></script>	
 	<script src="js/md5.js"></script>
 	<script src="js/tdapp.js"></script>
 	<link rel="stylesheet" media="all" type="text/css" href="css/tdstyle.css" />
@@ -22,7 +23,7 @@
 		<div class="libut fnt16" ng-click="dologin();" tabindex=3 ng-keydown="loginKeydown($event);">Login</div>
 		<div>&nbsp;</div>
 		<div class="fnt12">or</div>
-		<div class="libut fnt16" tabindex=4>Login via Twitter</div>
+		<div class="libut fnt16" tabindex=4 ng-click="authenticate('twitter');">Login via Twitter</div>
 		<div>&nbsp;</div>
 		<div class="flash">{{errormsg}}</div>
 </div>
